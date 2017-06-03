@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Passwords</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let current of passwords">
+
+    <ion-card-header>
+      {{current.username || "None"}}
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>{{current.description || "None"}}</p>
+      <br />
+      <button ion-button (click)="showPass(current.password_id, current)">Show Password</button>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
