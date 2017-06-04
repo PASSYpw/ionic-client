@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import {NavController, PopoverController, Tabs} from 'ionic-angular';
+import {ActionSheetController, ModalController, NavController, PopoverController, Tabs} from 'ionic-angular';
 import {Http} from "@angular/http";
 import {passwords} from "../../app/Passy";
 import {passy} from "../../app/app.component";
 import {PassShow} from "../pass-show/pass-show";
+import {NewPassPage} from "../new-password/new-pass";
 
 
 
@@ -17,10 +18,50 @@ export class HomePage {
     return passwords;
   }
 
-  constructor(public popoverCtrl: PopoverController, public navCtrl: NavController, private http: Http) {
+  constructor(public modalCtrl: ModalController,
+              public popoverCtrl: PopoverController,
+              public navCtrl: NavController,
+              private http: Http,
+              public actionSheetCtrl: ActionSheetController) {
 
 
 
+  }
+  addPass() {
+
+    let popover = this.modalCtrl.create(NewPassPage);
+    popover.present({
+    });
+
+  }
+  public more(value) {
+
+    console.log(value);
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Edit or achive this password',
+      buttons: [
+        {
+          text: 'Edit',
+          handler: () => {
+            console.log("weo");
+          }
+        },{
+          text: 'Delete',
+          handler: () => {
+            console.log("weo");
+
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log("weo");
+
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
   public showPass(id, password) {
 

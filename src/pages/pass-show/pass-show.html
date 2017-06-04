@@ -1,6 +1,11 @@
 <ion-content>
-
-    {{password}}
-
+    <ion-row center>
+        <ion-col width-50 center>
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input [(ngModel)]="password" type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+    </ion-row>
 </ion-content>
  

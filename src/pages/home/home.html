@@ -1,7 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title>Passwords</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <button (click)="addPass()" ion-button icon-only color="royal">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -15,7 +20,14 @@
     <ion-card-content>
       <p>{{current.description || "None"}}</p>
       <br />
-      <button ion-button (click)="showPass(current.password_id, current)">Show Password</button>
+      <ion-buttons start>
+        <button (click)="showPass(current.password_id, current)" ion-button icon-only>
+          <ion-icon name="eye"></ion-icon>
+        </button>
+        <button (click)="more(current)" ion-button icon-only color="transparent">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-card-content>
 
   </ion-card>

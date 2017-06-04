@@ -40,6 +40,24 @@ export class Passy {
     return response;
   }
 
+  public addPassword(http:Http, username, password, description, callback) {
+
+    const data = [{name: "a", value: "password/create"},
+      { name: "access_token", value: this.accessToken},
+      {name: "username", value: username}, {name: "password", value: password}, {name: "description", value: description}];
+
+    const me = this;
+    this.request(http, data, function (response) {
+
+      const json = JSON.parse(response.text());
+      if(json.success) {
+        me.fetchPasswords(http);
+      }
+      callback(json);
+    });
+
+  }
+
   public tryLogin(name: string, pass: string, http: Http, callBack){
 
     if (this.loggedIn) return;
