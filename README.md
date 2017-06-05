@@ -1,5 +1,5 @@
 #How to use
-(Release)[https://google.de]
+https://github.com/PASSYpw/ionic-client/releases/tag/1.0
 
 ## ionic-client
 This is NOT a official Passy APP!!!
