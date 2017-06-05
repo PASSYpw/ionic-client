@@ -12,6 +12,7 @@ import {LoginPage} from "../pages/login/LoginPage";
 import {PassShow} from "../pages/pass-show/pass-show";
 import {NewPassPage} from "../pages/new-password/new-pass";
 import {EditPassPage} from "../pages/edit-password/edit-pass";
+import {ArchivePage} from "../pages/archived/archive";
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {EditPassPage} from "../pages/edit-password/edit-pass";
         PassShow,
         NewPassPage,
         EditPassPage,
+        ArchivePage,
 
     ],
     imports: [
@@ -40,6 +42,7 @@ import {EditPassPage} from "../pages/edit-password/edit-pass";
         PassShow,
         NewPassPage,
         EditPassPage,
+        ArchivePage,
     ],
     providers: [
         StatusBar,

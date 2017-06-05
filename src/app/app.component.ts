@@ -13,7 +13,7 @@ import {HomePage} from "../pages/home/home";
 })
 export class MyApp {
   rootPage:any = TabsPage;
-  public passy = new Passy(this);
+  public passy = new Passy();
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       passy = this.passy;

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {Http} from "@angular/http";
 import {passy} from "../../app/app.component";
-import {ViewController} from "ionic-angular";
+import {NavParams, ViewController} from "ionic-angular";
 @Component({
     selector: 'new-pass',
     templateUrl: 'edit-pass.html'
@@ -9,12 +9,17 @@ import {ViewController} from "ionic-angular";
 
 export class EditPassPage  {
 
+    private id;
     private username;
     private password;
     private description;
 
-    constructor(public viewCtrl: ViewController,public http:Http) {
+    constructor(public viewCtrl: ViewController,public http:Http, private navParams: NavParams) {
 
+        this.id = navParams.data.password.data.password_id;
+        this.username = navParams.data.password.data.username;
+        this.password = navParams.data.password.pass;
+        this.description = navParams.data.password.data.description;
 
 
     }
@@ -22,7 +27,7 @@ export class EditPassPage  {
 
         const me = this;
 
-        passy.addPassword(this.http, this.username, this.password, this.description, function (data) {
+        passy.editPassword(this.id,this.username,this.password, this.description, this.http, function (data) {
 
             if(!data.success) {
 

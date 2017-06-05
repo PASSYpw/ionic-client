@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ActionSheetController, ModalController, NavController, PopoverController, Tabs} from 'ionic-angular';
 import {Http} from "@angular/http";
-import {passwords} from "../../app/Passy";
+import {archived} from "../../app/Passy";
 import {passy} from "../../app/app.component";
 import {PassShow} from "../pass-show/pass-show";
 import {NewPassPage} from "../new-password/new-pass";
@@ -11,12 +11,12 @@ import {EditPassPage} from "../edit-password/edit-pass";
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'archive.html'
 })
-export class HomePage {
+export class ArchivePage {
 
   get passwords() {
-    return passwords;
+    return archived;
   }
 
   constructor(public modalCtrl: ModalController,
@@ -42,25 +42,21 @@ export class HomePage {
       title: 'Edit or achive this password',
       buttons: [
         {
-          text: 'Edit',
+          text: 'Restore',
           handler: () => {
             const id = value.password_id;
-            passy.getPassword(id, this.http, function (password) {
-              let popover = me.modalCtrl.create(EditPassPage, {
-                password: {data: value, pass: password}
-              });
-              popover.present({
-              });
-            });
+            passy.restorePass(me.http, id, function (data) {
+              passy.fetchPasswords(me.http);
+            })
 
           }
         },{
           text: 'Delete',
           handler: () => {
-            passy.archive(me.http, value.password_id, function (data) {
+           passy.delPass(me.http, value.password_id, function (data) {
+             passy.fetchPasswords(me.http);
 
-
-            })
+           })
           }
         },{
           text: 'Cancel',
@@ -73,22 +69,6 @@ export class HomePage {
       ]
     });
     actionSheet.present();
-  }
-  public showPass(id, password) {
-
-    const me = this;
-    passy.getPassword(id, this.http, function (pass) {
-
-      let popover = me.popoverCtrl.create(PassShow, {
-        passInf: password,
-        password: pass
-      });
-
-      popover.present({
-
-      });
-    })
-
   }
 
 

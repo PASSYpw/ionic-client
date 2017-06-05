@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Archive</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let current of passwords">
+
+    <ion-card-header>
+      {{current.username || "None"}}
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>{{current.description || "None"}}</p>
+      <br />
+      <ion-buttons start>
+        <button (click)="more(current)" ion-button icon-only color="transparent">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

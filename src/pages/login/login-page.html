@@ -1,18 +1,29 @@
 <ion-content>
-  <ion-list>
+  <ion-card>
 
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
-    </ion-item>
+    <ion-card-header>
+     Login to Passy
+    </ion-card-header>
 
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
+    <ion-card-content>
+      <ion-list>
 
-  </ion-list>
-  <div padding>
-    <button ion-button (click)="tryLogin()">Sign In</button>
-  </div>
+        <ion-item>
+          <ion-label floating>Username</ion-label>
+          <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password"></ion-input>
+        </ion-item>
+
+      </ion-list>
+      <div padding>
+        <button ion-button (click)="tryLogin()">Sign In</button>
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>
