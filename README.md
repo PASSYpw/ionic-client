@@ -1,4 +1,6 @@
 # ionic-client
+[![Join our Discord](https://discordapp.com/api/guilds/324602899839844352/widget.png?style=shield)](https://discord.gg/5K6XDnR)
+
 This app, written with the Ionic Framework is a cross platform mobile app, which makes PASSY on phones more user friendly.
 
 ## Running via CLI
