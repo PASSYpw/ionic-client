@@ -6,6 +6,7 @@ import {passy} from "../../app/app.component";
 import {PassShow} from "../pass-show/pass-show";
 import {NewPassPage} from "../new-password/new-pass";
 import {EditPassPage} from "../edit-password/edit-pass";
+import {Storage} from "@ionic/storage";
 
 
 
@@ -23,10 +24,16 @@ export class HomePage {
               public popoverCtrl: PopoverController,
               public navCtrl: NavController,
               private http: Http,
-              public actionSheetCtrl: ActionSheetController) {
+              public actionSheetCtrl: ActionSheetController, public storage: Storage) {
 
 
 
+  }
+  logout() {
+    this.storage.clear().then(_ => {
+
+    passy.logOut();
+    });
   }
   addPass() {
 
@@ -77,17 +84,18 @@ export class HomePage {
   public showPass(id, password) {
 
     const me = this;
-    passy.getPassword(id, this.http, function (pass) {
+    password.vis = false;
+      passy.getPassword(id, this.http, function (pass) {
 
-      let popover = me.popoverCtrl.create(PassShow, {
-        passInf: password,
-        password: pass
-      });
+          let popover = me.popoverCtrl.create(PassShow, {
+              passInf: password,
+              password: pass
+          });
+          password.vis = true;
+          popover.present({
 
-      popover.present({
-
-      });
-    })
+          });
+      })
 
   }
 

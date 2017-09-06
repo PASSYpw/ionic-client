@@ -13,6 +13,9 @@ import {PassShow} from "../pages/pass-show/pass-show";
 import {NewPassPage} from "../pages/new-password/new-pass";
 import {EditPassPage} from "../pages/edit-password/edit-pass";
 import {ArchivePage} from "../pages/archived/archive";
+import {TouchID} from "@ionic-native/touch-id";
+import {IonicStorageModule} from "@ionic/storage";
+
 
 @NgModule({
     declarations: [
@@ -29,6 +32,7 @@ import {ArchivePage} from "../pages/archived/archive";
     ],
     imports: [
         BrowserModule,
+        IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp),
         HttpModule
     ],
@@ -47,7 +51,10 @@ import {ArchivePage} from "../pages/archived/archive";
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        TouchID
+
+
     ]
 })
 export class AppModule {

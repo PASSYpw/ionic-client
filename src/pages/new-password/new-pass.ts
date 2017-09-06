@@ -13,15 +13,14 @@ export class NewPassPage {
     private password;
     private description;
 
-    constructor(public viewCtrl: ViewController,public http:Http) {
-
-
-
+    constructor(public viewCtrl: ViewController,public http:Http) {}
+    cancel() {
+        this.viewCtrl.dismiss();
     }
+
     newPass() {
 
         const me = this;
-
         passy.addPassword(this.http, this.username, this.password, this.description, function (data) {
 
             if(!data.success) {
@@ -29,7 +28,6 @@ export class NewPassPage {
             } else {
                 me.viewCtrl.dismiss();
             }
-
         });
 
     }

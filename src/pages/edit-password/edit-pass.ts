@@ -23,6 +23,10 @@ export class EditPassPage  {
 
 
     }
+    cancel() {
+        this.viewCtrl.dismiss();
+
+    }
     save() {
 
         const me = this;

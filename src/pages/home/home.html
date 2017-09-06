@@ -2,6 +2,9 @@
   <ion-toolbar>
     <ion-title>Passwords</ion-title>
     <ion-buttons end>
+      <button (click)="logout()" ion-button icon-only color="royal">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
       <button (click)="addPass()" ion-button icon-only color="royal">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -21,8 +24,11 @@
       <p>{{current.description || "None"}}</p>
       <br />
       <ion-buttons start>
-        <button (click)="showPass(current.password_id, current)" ion-button icon-only>
+        <button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>
           <ion-icon name="eye"></ion-icon>
+        </button>
+        <button *ngIf="!current.vis" ion-button icon-only>
+          <ion-spinner item-start></ion-spinner>
         </button>
         <button (click)="more(current)" ion-button icon-only color="transparent">
           <ion-icon name="add"></ion-icon>

@@ -1,28 +1,58 @@
 import {Http, Headers, RequestOptions} from "@angular/http";
 import {loginScreen, popAlert} from "../pages/tabs/tabs";
+
 export var passwords = [];
 export var archived = [];
 export var loggedIn = false;
+
 export class Passy {
 
     accessToken;
     public loggedIn = false;
-    private _baseURL = "https://dev.liz3.net/passy-api/index.php";
+    private _baseURL = "https://passy-api.herokuapp.com";
+    private _target = "https://app.passy.pw/action.php";
+    public isFingerPrint = false;
+    public timer;
 
-    constructor() {
+    constructor(target: string) {
+
+
+        let toMod = target;
+
+        if (target != null) {
+            if (toMod.indexOf("action.php") != -1) {
+                this._target = toMod;
+            } else {
+                if (toMod.endsWith("/")) {
+                    this._target = toMod + "action.php";
+                } else {
+                    this._target = toMod + "/action.php";
+                }
+            }
+        }
+
 
 
     }
 
+    public logOut() {
+
+            passwords = [];
+            archived = [];
+            this.accessToken = "";
+            loginScreen();
+            clearInterval(this.timer);
+
+    }
     private request(http: Http, vals, callback) {
 
-        let opt: RequestOptions
-        let myHeaders: Headers = new Headers
+        let opt: RequestOptions;
+        let myHeaders: Headers = new Headers;
         myHeaders.set('Content-type', 'application/x-www-form-urlencoded');
         opt = new RequestOptions({
             headers: myHeaders
         });
-
+        vals.push({name: "target", value: this._target});
         http.post(this._baseURL, this.buildRequestString(vals), opt).subscribe(response => {
             callback(response);
         })
@@ -81,7 +111,7 @@ export class Passy {
 
     }
 
-    public tryLogin(name: string, pass: string, http: Http, callBack) {
+    public tryLogin(name: string, pass: string, http: Http, callBack, loader) {
 
         if (this.loggedIn) return;
 
@@ -102,22 +132,26 @@ export class Passy {
                     loggedIn = true;
                     callBack(true);
 
-                    const timer = setInterval(function () {
-                        me.request(http, [{name: "access_token", value: me.accessToken}, {name: "a", value: "status"}], function (response) {
+                     me.timer = setInterval(function () {
+                        me.request(http, [{name: "access_token", value: me.accessToken}, {
+                            name: "a",
+                            value: "status"
+                        }], function (response) {
 
                             const json = JSON.parse(response.text());
-                            if(!json.data.logged_in) {
+                            if (!json.data.logged_in) {
                                 passwords = [];
                                 archived = [];
                                 me.accessToken = "";
-                                loginScreen()
-                                clearInterval(timer);
+                                loginScreen();
+                                clearInterval(me.timer);
                             }
 
                         })
 
                     }, 2000);
                 } else {
+                    loader.dismissAll();
                     popAlert("Failed", "Failed to login");
                 }
 
@@ -217,6 +251,7 @@ export class Passy {
             const archive = [];
             for (let i = 0; i != json.data.length; i++) {
                 const current = json.data[i];
+                current.vis = true;
 
                 if (current.archived) {
                     archive.push(current);
@@ -259,3 +294,10 @@ export class Password {
         return this._username;
     }
 }
+
+export let isCordovaAvailable = () => {
+    if (!(<any>window).cordova) {
+        return false;
+    }
+    return true;
+};
