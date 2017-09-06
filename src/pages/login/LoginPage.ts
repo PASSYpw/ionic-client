@@ -5,7 +5,7 @@ import {Http} from "@angular/http";
 import {isCordovaAvailable, Passy} from "../../app/Passy";
 import {TouchID} from '@ionic-native/touch-id';
 import {Storage} from "@ionic/storage";
-import { LoadingController } from 'ionic-angular';
+import {LoadingController} from 'ionic-angular';
 
 
 @Component({
@@ -19,9 +19,6 @@ export class LoginPage {
 
 
     constructor(public viewCtrl: ViewController, public http: Http, private touchId: TouchID, public storage: Storage, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-
-
-        console.log("called 1")
     }
 
 
@@ -30,21 +27,20 @@ export class LoginPage {
         stPassy(new Passy(this.target));
         const me = this;
         let loader = this.loadingCtrl.create({
-            content: "Login in",
+            content: "Logging in...",
             duration: 60000
         });
         loader.present();
         passy.tryLogin(this.username, this.password, this.http, function (succeeded) {
             loader.dismissAll();
             if (succeeded) {
-                if(isCordovaAvailable())  {
+                if (isCordovaAvailable()) {
                     me.storage.keys().then(keys => {
 
 
                         if (keys.indexOf("touch_dismiss") == -1) {
-
                             let confirm = me.alertCtrl.create({
-                                title: 'Save for touch id?',
+                                title: 'Enable Touch ID Login?',
                                 message: 'Do you want to be able to login with touch id?',
                                 buttons: [{
                                     text: 'Disagree',
@@ -87,22 +83,21 @@ export class LoginPage {
 
     ionViewDidLoad() {
 
+        if (!isCordovaAvailable()) return;
 
-        if(!isCordovaAvailable()) return;
-        console.log("called 2");
         const it = this;
         this.storage.keys().then(keys => {
             if (keys.indexOf("touch_save") != -1) {
 
                 it.touchId.isAvailable()
                     .then(_ => {
-                            it.touchId.verifyFingerprint('Verify the Touch setup')
+                            it.touchId.verifyFingerprint('Login to Passy with Touch ID')
                                 .then(
                                     res => {
                                         it.storage.get("touch_user").then(username => {
                                             it.storage.get("touch_pass").then(pass => {
                                                 let loader = it.loadingCtrl.create({
-                                                    content: "Login in",
+                                                    content: "Logging in...",
                                                     duration: 60000
                                                 });
                                                 loader.present();

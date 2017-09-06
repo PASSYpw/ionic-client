@@ -4,7 +4,15 @@ import {loginScreen, popAlert} from "../pages/tabs/tabs";
 export var passwords = [];
 export var archived = [];
 export var loggedIn = false;
-
+export function randomPassword(length) {
+    var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#-.,+*$%&!",
+        string = "";
+    for (var i = 0; i < length; i++) {
+        var position = Math.floor(Math.random() * alphabet.length);
+        string += alphabet.charAt(position);
+    }
+    return string;
+}
 export class Passy {
 
     accessToken;
@@ -252,6 +260,7 @@ export class Passy {
             for (let i = 0; i != json.data.length; i++) {
                 const current = json.data[i];
                 current.vis = true;
+                current.totalVis = true;
 
                 if (current.archived) {
                     archive.push(current);

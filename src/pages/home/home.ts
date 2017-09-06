@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActionSheetController, ModalController, NavController, PopoverController, Tabs} from 'ionic-angular';
 import {Http} from "@angular/http";
 import {passwords} from "../../app/Passy";
@@ -9,95 +9,130 @@ import {EditPassPage} from "../edit-password/edit-pass";
 import {Storage} from "@ionic/storage";
 
 
-
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html'
 })
 export class HomePage {
 
-  get passwords() {
-    return passwords;
-  }
+    private searchText = '';
 
-  constructor(public modalCtrl: ModalController,
-              public popoverCtrl: PopoverController,
-              public navCtrl: NavController,
-              private http: Http,
-              public actionSheetCtrl: ActionSheetController, public storage: Storage) {
+    get passwords() {
+        return passwords;
+    }
 
-
-
-  }
-  logout() {
-    this.storage.clear().then(_ => {
-
-    passy.logOut();
-    });
-  }
-  addPass() {
-
-    let popover = this.modalCtrl.create(NewPassPage);
-    popover.present({
-    });
-
-  }
-  public more(value) {
-
-    const me = this;
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Edit or achive this password',
-      buttons: [
-        {
-          text: 'Edit',
-          handler: () => {
-            const id = value.password_id;
-            passy.getPassword(id, this.http, function (password) {
-              let popover = me.modalCtrl.create(EditPassPage, {
-                password: {data: value, pass: password}
-              });
-              popover.present({
-              });
-            });
-
-          }
-        },{
-          text: 'Delete',
-          handler: () => {
-            passy.archive(me.http, value.password_id, function (data) {
+    constructor(public modalCtrl: ModalController,
+                public popoverCtrl: PopoverController,
+                public navCtrl: NavController,
+                private http: Http,
+                public actionSheetCtrl: ActionSheetController, public storage: Storage) {
 
 
-            })
-          }
-        },{
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
+    }
 
+    search(item) {
 
-          }
+        if (this.searchText == "") {
+
+            for (let i = 0; i < passwords.length; i++) {
+                passwords[i].totalVis = !passwords[i].totalVis;
+            }
+            return;
         }
-      ]
-    });
-    actionSheet.present();
-  }
-  public showPass(id, password) {
+        for (let i = 0; i < passwords.length; i++) {
+            const current = passwords[i];
 
-    const me = this;
-    password.vis = false;
-      passy.getPassword(id, this.http, function (pass) {
 
-          let popover = me.popoverCtrl.create(PassShow, {
-              passInf: password,
-              password: pass
-          });
-          password.vis = true;
-          popover.present({
+            if (current.username == null && current.description == null) {
+                current.totalVis = false;
+                continue;
+            }
+            const description = current.description;
+            const username = current.username;
 
-          });
-      })
+            if (description != null && description.indexOf(this.searchText) != -1) {
+                passwords[i].totalVis = true;
+                continue;
+            }
+            if (username != null && username.indexOf(this.searchText) != -1) {
+                passwords[i].totalVis = true;
+                continue;
+            }
 
-  }
+            passwords[i].totalVis = false;
+        }
+
+
+    }
+
+    logout() {
+        this.storage.clear().then(_ => {
+
+            passy.logOut();
+        });
+    }
+
+    addPass() {
+
+        let popover = this.modalCtrl.create(NewPassPage);
+        popover.present({});
+
+    }
+
+    public more(value) {
+
+        const me = this;
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Edit or achive this password',
+            buttons: [
+                {
+                    text: 'Edit',
+                    handler: () => {
+                        const id = value.password_id;
+                        passy.getPassword(id, this.http, function (password) {
+                            let popover = me.modalCtrl.create(EditPassPage, {
+                                password: {data: value, pass: password}
+                            });
+                            popover.present({});
+                        });
+
+                    }
+                }, {
+                    text: 'Delete',
+                    handler: () => {
+                        passy.archive(me.http, value.password_id, function (data) {
+
+
+                        })
+                    }
+                }, {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+
+
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    public showPass(id, password) {
+
+        const me = this;
+        password.vis = false;
+        passy.getPassword(id, this.http, function (pass) {
+
+            let popover = me.popoverCtrl.create(PassShow, {
+                passInf: password,
+                password: pass
+            });
+            password.vis = true;
+            popover.present({});
+        })
+
+    }
 
 
 }

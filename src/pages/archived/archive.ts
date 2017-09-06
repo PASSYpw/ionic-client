@@ -39,7 +39,7 @@ export class ArchivePage {
 
     const me = this;
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Edit or achive this password',
+      title: 'Restore or delete the password',
       buttons: [
         {
           text: 'Restore',

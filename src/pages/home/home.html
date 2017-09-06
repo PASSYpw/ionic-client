@@ -14,28 +14,34 @@
 
 <ion-content padding>
 
-  <ion-card *ngFor="let current of passwords">
+  <ion-searchbar (ionInput)="search($event)" [(ngModel)]="searchText"></ion-searchbar>
 
-    <ion-card-header>
-      {{current.username || "None"}}
-    </ion-card-header>
+  <div *ngFor="let current of passwords">
+    <ion-card *ngIf="current.totalVis">
 
-    <ion-card-content>
-      <p>{{current.description || "None"}}</p>
-      <br />
-      <ion-buttons start>
-        <button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>
-          <ion-icon name="eye"></ion-icon>
-        </button>
-        <button *ngIf="!current.vis" ion-button icon-only>
-          <ion-spinner item-start></ion-spinner>
-        </button>
-        <button (click)="more(current)" ion-button icon-only color="transparent">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-card-content>
+      <ion-card-header>
+        {{current.username || "None"}}
+      </ion-card-header>
 
-  </ion-card>
+      <ion-card-content>
+        <p>{{current.description || "None"}}</p>
+        <br />
+        <ion-buttons start>
+          <button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>
+            <ion-icon name="eye"></ion-icon>
+          </button>
+          <button *ngIf="!current.vis" ion-button icon-only>
+            <ion-spinner item-start></ion-spinner>
+          </button>
+          <button (click)="more(current)" ion-button icon-only color="transparent">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+
 
 </ion-content>

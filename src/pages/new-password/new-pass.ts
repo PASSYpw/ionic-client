@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {Http} from "@angular/http";
 import {passy} from "../../app/app.component";
 import {ViewController} from "ionic-angular";
+import {randomPassword} from "../../app/Passy";
 @Component({
     selector: 'new-pass',
     templateUrl: 'new-pass.html'
@@ -18,6 +19,9 @@ export class NewPassPage {
         this.viewCtrl.dismiss();
     }
 
+    randomPass() {
+        this.password = randomPassword(15);
+    }
     newPass() {
 
         const me = this;
