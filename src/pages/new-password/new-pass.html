@@ -1,24 +1,26 @@
 <ion-content>
-    <ion-list>
+	<ion-list>
 
-        <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
-        </ion-item>
+		<ion-item>
+			<ion-label floating>Username</ion-label>
+			<ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+		</ion-item>
 
-        <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input [(ngModel)]="password" type="password"></ion-input>
-        </ion-item>
-        <button ion-button (click)="randomPass()">Random</button>
+		<ion-item>
+			<ion-label floating>Password</ion-label>
+			<ion-input [(ngModel)]="password" type="password"></ion-input>
+		</ion-item>
+		<ion-item>
+			<button ion-button (click)="randomPass()">Random</button>
+		</ion-item>
 
-        <ion-item>
-            <ion-label floating>Description</ion-label>
-            <ion-input [(ngModel)]="description" type="text"></ion-input>
-        </ion-item>
-    </ion-list>
-    <div padding>
-        <button ion-button (click)="newPass()">Add</button>
-        <button ion-button (click)="cancel()">Cancel</button>
-    </div>
+		<ion-item>
+			<ion-label floating>Description</ion-label>
+			<ion-input [(ngModel)]="description" type="text"></ion-input>
+		</ion-item>
+	</ion-list>
+	<div padding>
+		<button ion-button (click)="newPass()">Add</button>
+		<button ion-button (click)="cancel()">Cancel</button>
+	</div>
 </ion-content>

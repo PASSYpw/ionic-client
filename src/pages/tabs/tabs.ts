@@ -24,6 +24,8 @@ export class TabsPage {
 
        this.platform.registerBackButtonAction(() => {});
 
+
+
     }
 
 

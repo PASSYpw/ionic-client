@@ -3,7 +3,7 @@
     <name>Passy</name>
     <description>The mobile App for the Passy Password Manager</description>
     <author email="contact@passy.pw" href="https://passy.pw">Passy Team</author>
-    <content original-src="index.html" src="http://192.168.178.45:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -81,6 +81,7 @@
     <allow-navigation href="http://192.168.178.45:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-clipboard" spec="^1.0.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-http" spec="^1.2.0" />

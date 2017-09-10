@@ -28,6 +28,7 @@
         "@ionic-native/touch-id": "^4.2.1",
         "@ionic/storage": "^2.0.1",
         "cordova-android": "^6.2.3",
+        "cordova-clipboard": "^1.0.0",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "^1.0.7",
@@ -63,7 +64,8 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-touch-id": {},
-            "cordova-sqlite-storage": {}
+            "cordova-sqlite-storage": {},
+            "cordova-clipboard": {}
         },
         "platforms": [
             "android",

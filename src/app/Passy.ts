@@ -1,5 +1,6 @@
 import {Http, Headers, RequestOptions} from "@angular/http";
 import {loginScreen, popAlert} from "../pages/tabs/tabs";
+import {AlertController} from "ionic-angular";
 
 export var passwords = [];
 export var archived = [];
@@ -119,7 +120,7 @@ export class Passy {
 
     }
 
-    public tryLogin(name: string, pass: string, http: Http, callBack, loader) {
+    public tryLogin(name: string, pass: string, http: Http, callBack, loader, alertController:AlertController) {
 
         if (this.loggedIn) return;
 
@@ -134,6 +135,7 @@ export class Passy {
                 const data = JSON.parse(response.text());
 
                 if (data.success) {
+
                     me.accessToken = data.token[0];
 
                     me.fetchPasswords(http);
@@ -159,6 +161,72 @@ export class Passy {
 
                     }, 2000);
                 } else {
+                    if(data.msg == "two_factor_needed") {
+
+                        let twoFaPrompt = alertController.create({
+                            title: 'Login',
+                            inputs: [
+                                {
+                                    name: 'code',
+                                    placeholder: 'Two Factor Code'
+                                }
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel',
+                                    handler: data => {
+                                        callBack(false);
+                                        return;
+                                    }
+                                },
+                                {
+                                    text: 'Login',
+                                    handler: data => {
+
+                                        me.request(http, [{name: "a", value: "user/login"},
+                                            {name: "username", value: name}, {name: "password", value: pass}, {name: "2faCode", value: data.code}], (response) => {
+
+                                            const data = JSON.parse(response.text());
+
+                                            me.accessToken = data.token[0];
+
+                                            me.fetchPasswords(http);
+                                            loggedIn = true;
+                                            callBack(true);
+
+                                            me.timer = setInterval(function () {
+                                                me.request(http, [{name: "access_token", value: me.accessToken}, {
+                                                    name: "a",
+                                                    value: "status"
+                                                }], function (response) {
+
+                                                    const json = JSON.parse(response.text());
+                                                    if (!json.data.logged_in) {
+                                                        passwords = [];
+                                                        archived = [];
+                                                        me.accessToken = "";
+                                                        loginScreen();
+                                                        clearInterval(me.timer);
+                                                    }
+
+                                                })
+
+                                            }, 2000);
+
+
+                                        });
+
+                                        return;
+                                    }
+                                }
+                            ]
+                        });
+                        twoFaPrompt.present();
+
+
+                        return;
+                    }
                     loader.dismissAll();
                     popAlert("Failed", "Failed to login");
                 }

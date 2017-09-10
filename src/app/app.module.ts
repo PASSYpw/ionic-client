@@ -15,6 +15,7 @@ import {EditPassPage} from "../pages/edit-password/edit-pass";
 import {ArchivePage} from "../pages/archived/archive";
 import {TouchID} from "@ionic-native/touch-id";
 import {IonicStorageModule} from "@ionic/storage";
+import {Clipboard} from "@ionic-native/clipboard";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {IonicStorageModule} from "@ionic/storage";
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        TouchID
+        TouchID,
+        Clipboard
 
 
     ]

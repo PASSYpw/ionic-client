@@ -19,6 +19,11 @@ export class LoginPage {
 
 
     constructor(public viewCtrl: ViewController, public http: Http, private touchId: TouchID, public storage: Storage, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+
+        const me = this;
+        storage.get("save_url").then(val => {
+           if(val != null && val.length > 5) me.target = val;
+        })
     }
 
 
@@ -34,51 +39,58 @@ export class LoginPage {
         passy.tryLogin(this.username, this.password, this.http, function (succeeded) {
             loader.dismissAll();
             if (succeeded) {
-                if (isCordovaAvailable()) {
-                    me.storage.keys().then(keys => {
+               me.storage.set("save_url", me.target).then(_ => {
+                   if (isCordovaAvailable()) {
+                       me.storage.keys().then(keys => {
 
 
-                        if (keys.indexOf("touch_dismiss") == -1) {
-                            let confirm = me.alertCtrl.create({
-                                title: 'Enable Touch ID Login?',
-                                message: 'Do you want to be able to login with touch id?',
-                                buttons: [{
-                                    text: 'Disagree',
-                                    handler: () => {
-                                        me.storage.set("touch_dismiss", true).then(_ => {
-                                            me.dismiss()
+                           if (keys.indexOf("touch_dismiss") == -1) {
 
-                                        });
+                               me.touchId.isAvailable().then(_ => {
+                                   let confirm = me.alertCtrl.create({
+                                       title: 'Enable Touch ID Login?',
+                                       message: 'Do you want to be able to login with touch id?',
+                                       buttons: [{
+                                           text: 'Disagree',
+                                           handler: () => {
+                                               me.storage.set("touch_dismiss", true).then(_ => {
+                                                   me.dismiss()
 
-                                    }
-                                },
-                                    {
-                                        text: 'Agree',
-                                        handler: () => {
-                                            me.storage.set("touch_save", true).then(_ => {
-                                                me.storage.set("touch_user", me.username).then(_ => {
-                                                    me.storage.set("touch_pass", me.password).then(_ => {
-                                                        me.dismiss();
-                                                    });
-                                                });
-                                            });
-                                        }
-                                    }]
-                            });
-                            confirm.present();
-                        } else {
-                            me.dismiss()
+                                               });
 
-                        }
+                                           }
+                                       },
+                                           {
+                                               text: 'Agree',
+                                               handler: () => {
+                                                   me.storage.set("touch_save", true).then(_ => {
+                                                       me.storage.set("touch_user", me.username).then(_ => {
+                                                           me.storage.set("touch_pass", me.password).then(_ => {
+                                                               me.dismiss();
+                                                           });
+                                                       });
+                                                   });
+                                               }
+                                           }]
+                                   });
+                                   confirm.present();
+                               }).catch(_ => {
+                                   me.dismiss();
+                               });
+                           } else {
+                               me.dismiss();
 
-                    });
+                           }
 
-                } else {
-                    me.dismiss();
-                }
+                       });
+
+                   } else {
+                       me.dismiss();
+                   }
+               })
             }
 
-        }, loader);
+        }, loader, this.alertCtrl);
     }
 
     ionViewDidLoad() {
@@ -107,7 +119,7 @@ export class LoginPage {
                                                         loader.dismissAll();
                                                         it.dismiss()
                                                     }
-                                                });
+                                                }, loader,  this.alertCtrl);
                                             })
                                         })
                                     },

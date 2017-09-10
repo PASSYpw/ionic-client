@@ -1,47 +1,49 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Passwords</ion-title>
-    <ion-buttons end>
-      <button (click)="logout()" ion-button icon-only color="royal">
-        <ion-icon name="log-out"></ion-icon>
-      </button>
-      <button (click)="addPass()" ion-button icon-only color="royal">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-title>Passwords</ion-title>
+		<ion-buttons start>
+			<button (click)="addPass()" ion-button icon-only color="royal">
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-buttons end>
+			<button (click)="logout()" ion-button icon-only color="royal">
+				<ion-icon name="log-out"></ion-icon>
+			</button>
+
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-searchbar (ionInput)="search($event)" [(ngModel)]="searchText"></ion-searchbar>
+	<ion-searchbar (ionInput)="search($event)" [(ngModel)]="searchText"></ion-searchbar>
 
-  <div *ngFor="let current of passwords">
-    <ion-card *ngIf="current.totalVis">
+	<div *ngFor="let current of passwords">
+		<ion-card *ngIf="current.totalVis">
 
-      <ion-card-header>
-        {{current.username || "None"}}
-      </ion-card-header>
+			<ion-card-header>
+				{{current.username || "None"}}
+			</ion-card-header>
 
-      <ion-card-content>
-        <p>{{current.description || "None"}}</p>
-        <br />
-        <ion-buttons start>
-          <button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>
-            <ion-icon name="eye"></ion-icon>
-          </button>
-          <button *ngIf="!current.vis" ion-button icon-only>
-            <ion-spinner item-start></ion-spinner>
-          </button>
-          <button (click)="more(current)" ion-button icon-only color="transparent">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-card-content>
+			<ion-card-content>
+				<p>{{current.description || "None"}}</p>
+				<br/>
+				<ion-buttons start>
+					<button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>
+						<ion-icon name="eye"></ion-icon>
+					</button>
+					<button *ngIf="!current.vis" ion-button icon-only>
+						<ion-spinner item-start></ion-spinner>
+					</button>
+					<button (click)="more(current)" ion-button icon-only color="transparent">
+						<ion-icon name="add"></ion-icon>
+					</button>
+				</ion-buttons>
+			</ion-card-content>
 
-    </ion-card>
-  </div>
-
+		</ion-card>
+	</div>
 
 
 </ion-content>
