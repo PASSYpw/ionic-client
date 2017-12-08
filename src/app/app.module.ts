@@ -16,6 +16,7 @@ import {ArchivePage} from "../pages/archived/archive";
 import {TouchID} from "@ionic-native/touch-id";
 import {IonicStorageModule} from "@ionic/storage";
 import {Clipboard} from "@ionic-native/clipboard";
+import {AndroidFingerprintAuth} from "@ionic-native/android-fingerprint-auth";
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {Clipboard} from "@ionic-native/clipboard";
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         TouchID,
-        Clipboard
+        Clipboard,
+        AndroidFingerprintAuth
 
 
     ]
