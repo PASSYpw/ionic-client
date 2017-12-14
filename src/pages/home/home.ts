@@ -43,12 +43,12 @@ export class HomePage {
             const current = passwords[i];
 
 
-            if (current.username == null && current.description == null) {
+            if (current.username.raw == null && current.description.raw == null) {
                 current.totalVis = false;
                 continue;
             }
-            const description = current.description;
-            const username = current.username;
+            const description = current.description.raw;
+            const username = current.username.raw;
 
             if (description != null && description.indexOf(this.searchText) != -1) {
                 passwords[i].totalVis = true;

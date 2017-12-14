@@ -23,11 +23,11 @@
 		<ion-card *ngIf="current.totalVis">
 
 			<ion-card-header>
-				{{current.username || "None"}}
+				{{current.username.raw || "None"}}
 			</ion-card-header>
 
 			<ion-card-content>
-				<p>{{current.description || "None"}}</p>
+				<p>{{current.description.raw || "None"}}</p>
 				<br/>
 				<ion-buttons start>
 					<button *ngIf="current.vis" (click)="showPass(current.password_id, current)" ion-button icon-only>

@@ -250,7 +250,7 @@ export class Passy {
         ], function (response) {
 
             const json = JSON.parse(response.text());
-            callback(json.data.password);
+            callback(json.data.password.raw);
 
         });
     }

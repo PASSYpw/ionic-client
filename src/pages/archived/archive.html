@@ -9,11 +9,11 @@
   <ion-card *ngFor="let current of passwords">
 
     <ion-card-header>
-      {{current.username || "None"}}
+      {{current.username.raw || "None"}}
     </ion-card-header>
 
     <ion-card-content>
-      <p>{{current.description || "None"}}</p>
+      <p>{{current.description.raw || "None"}}</p>
       <br />
       <ion-buttons start>
         <button (click)="more(current)" ion-button icon-only color="transparent">

@@ -17,9 +17,9 @@ export class EditPassPage  {
     constructor(public viewCtrl: ViewController,public http:Http, private navParams: NavParams) {
 
         this.id = navParams.data.password.data.password_id;
-        this.username = navParams.data.password.data.username;
+        this.username = navParams.data.password.data.username.raw;
         this.password = navParams.data.password.pass;
-        this.description = navParams.data.password.data.description;
+        this.description = navParams.data.password.data.description.raw;
 
 
     }
